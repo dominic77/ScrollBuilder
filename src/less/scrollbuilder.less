@@ -1,0 +1,102 @@
+
+.scrollbuilder {
+	.certificate {
+		width: 8.2in;
+		height: 3.5in;
+		position: relative;
+
+		border: solid black 5px;
+		margin: 5px;
+
+		.ampersand {
+			position: absolute;
+			width: 1.5in;
+			height: 1.5in;
+			top: 0.5in;
+			left: 0.2in;
+			background-image: url('../img/scrollbuilder-dndamp.png');
+			background-size: contain;
+    		background-repeat: no-repeat;
+    		opacity: 0.1;
+		}
+		.redbar {
+			height: 20px;
+			width: 100%;
+			background-image: url('../img/scrollbuilder-redbar.jpg');
+			background-repeat: no-repeat;
+    		background-position: center center;
+    		margin: 0.08in;
+		}
+
+		.name, .adventure, .rarity, .description {
+			position: relative;
+			left: 0;
+			right: 0;
+			text-align: center;
+			font-size: 0.15in;
+		}
+
+		.name {
+			font-variant: small-caps;
+			font-size: 0.4in;
+			font-weight: bold;
+			font-family: Andata;
+		}
+
+		.adventure {
+			font-style: italic;
+		}
+
+		.rarity {
+			font-weight: bold;
+		}
+
+		.description {
+			margin: 0 0.5in 0 0.5in;
+			font-size: 0.13in;
+		}
+
+		.tableblock {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+
+			.notrade {
+				width: 100%;
+				text-align: center;
+				font-weight: bold;
+				font-style: italic;
+				font-size: 0.12in;
+			}
+
+			table {
+				width: 100%;
+				background-color: black;
+				border-spacing: 4px;
+
+				tr.label td {
+					width: 33%;
+					color: white;
+					font-weight: bold;
+					font-size: 0.10in;
+				}
+				tr.input td {
+					height: 26px;
+					background-color: white;
+					text-align: center;
+				}
+			}
+		}
+	}
+}
+
+@media print {
+	header nav, footer, .demo-button-wrap {
+		display: none;
+	}
+
+	.certificate {
+		page-break-inside: avoid;
+	}
+}

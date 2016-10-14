@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="fuelux">
+	<head>
+		<meta charset="utf-8">
+		<title>scrollbuilder Test Suite</title>
+		<link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" media="screen">
+		<link href="../dist/css/scrollbuilder-compiled.css" rel="stylesheet" type="text/css" />
+		<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<h1 id="qunit-header">scrollbuilder Test Suite</h1>
+
+		<h2 id="qunit-banner"></h2>
+
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div id="qunit-fixture">
+
+		</div>
+		<script src="../bower_components/qunit/qunit/qunit.js"></script>
+		<script src="../bower_components/requirejs/require.js"></script>
+		<script src="../bower_components/blanket/dist/qunit/blanket.min.js" data-cover-only="scrollbuilder-amd"></script>
+		<script>
+			if (location.href.match(/(\?|&)gruntReport($|&|=)/)) {
+				blanket.options("reporter", "../node_modules/grunt-blanket-qunit/reporter/grunt-reporter.js");
+			}
+		</script>
+
+		<script>
+			(function () {
+				require.config({
+					waitSeconds: 30,
+					baseUrl: '../src',
+					paths: {
+						'backbone': '../bower_components/backbone/backbone',
+						'bootstrap': '../bower_components/bootstrap/dist/js/bootstrap',
+						'scrollbuilder-i18n': 'i18n/i18n',
+						'scrollbuilder': '../dist/scrollbuilder-amd',
+						'fuelux': '../bower_components/fuelux/dist/js/fuelux',
+						'jquery': '../bower_components/jquery/dist/jquery',
+						'moment': '../bower_components/moment/moment',
+						'text': '../bower_components/requirejs-text/text',
+						'underscore': '../bower_components/underscore/underscore'
+					},
+					shim: {
+						backbone: { deps: ['jquery', 'underscore'], exports: 'Backbone' },
+						fuelux: { deps: ['jquery'] },
+					}
+				});
+			})();
+		</script>
+		<script src="test.js"></script>
+		<!--script src="//localhost:35729/livereload.js"></script-->
+	</body>
+</html>

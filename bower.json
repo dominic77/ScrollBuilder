@@ -1,0 +1,27 @@
+{
+	"name": "certgen",
+	"version": "0.1.0",
+	"main": [
+		"dist/certgen-amd.js",
+		"dist/css/certgen-responsive.css",
+		"dist/less/certgen.less"
+	],
+	"ignore": ["doc", "lib", "src", "test", "utils", ".gitignore", ".jshintrc", "Gruntfile.js", "README.md", "app.js", "index.html"],
+	"private": true,
+	"dependencies": {
+		"backbone": "backbone#1.0.0",
+		"jquery": "jquery#1.11.0",
+		"underscore": "underscore#1.6.0"
+	},
+	"devDependencies": {
+		"almond": "0.2.9",
+		"blanket": "blanket#",
+		"qunit": "qunit#1.14.0",
+		"requirejs-text": "2.0.10",
+		"requirejs": "2.1.16"
+	},
+	"resolutions": {
+		"moment": "2.9.0",
+		"requirejs": "2.1.16"
+	}
+}

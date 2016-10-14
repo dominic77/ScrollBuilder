@@ -1,0 +1,29 @@
+<div class="scrollbuilder">
+	<% _.each(certificates, function (cert) { %>
+	<div class="certificate">
+
+		<div class="ampersand"></div>
+		<div class="name"><%= cert.name %></div>
+		<div class="adventure"><%= cert.adventure %></div>
+
+		<div class="redbar"></div>
+
+		<div class="rarity">
+			<%= cert.rarity %>
+			<% if (cert.attunement === true) { %> (requires attunement) <% } %>
+			<% if (_.isString(cert.attunement)) { %> (requires attunement by <%= cert.attunement %>) <% } %>
+		</div>
+		<div class="description"><%= cert.description %></div>
+
+		<div class="tableblock">
+			<div class="notrade">This item is not eligable for trading</div>
+			<table>
+				<tr class="input"><td></td><td></td><td></td></tr>
+				<tr class="label"><td>CHARACTER</td><td>PLAYER</td><td>PLAYER DCI #</td></tr>
+				<tr class="input"><td><%= cert.dmname %></td><td><%= cert.dmdci %></td><td></td></tr>
+				<tr class="label"><td>DUNGEON MASTER</td><td>DUNGEON MASTER DCI #</td><td>DM SIGNATURE</td></tr>
+			</table>
+		</div>
+	</div>
+	<% }); %>
+</div>

@@ -1,0 +1,290 @@
+{
+	"blanket_qunit": {
+		"simple": {
+			"options": {
+				"urls": ["test/index.html?coverage=true&gruntReport"],
+				"threshold": 95
+			}
+		},
+		"full": {
+			"options": {
+				"urls": ["http://localhost:<%= express.server.options.port %>/test/index.html?coverage=true&gruntReport"],
+				"threshold": 95
+			}
+		}
+	},
+	"jshint": {
+		"options": {
+			"jshintrc": ".jshintrc"
+		},
+		"source": ["src/**/*.js", "!src/i18n/i18n.js"],
+		"tests": ["test/**/*.js"]
+	},
+	"requirejs": {
+		"amd": {
+			"options": {
+				"baseUrl": "src",
+				"name": "scrollbuilder",
+				"out": "dist/scrollbuilder-amd.js",
+				"optimize": "none",
+				"optimizeCss": "none",
+				"normalizeDirDefines": "all",
+				"wrap": false,
+				"paths": {
+					"backbone": "empty:",
+					"scrollbuilder-i18n": "i18n/i18n",
+					"scrollbuilder-logic": "scrollbuilder-logic",
+					"scrollbuilder": "scrollbuilder-plugin",
+					"fuelux": "empty:",
+					"jquery": "empty:",
+					"text": "../bower_components/requirejs-text/text",
+					"underscore": "empty:"
+				},
+				"exclude": ["jquery", "text", "backbone", "underscore", "fuelux"],
+				"shim": {},
+				"stubModules": ["text"]
+			}
+		},
+		"wrapped": {
+			"options": {
+				"baseUrl": "src",
+				"name": "scrollbuilder",
+				"include": ["almond"],
+				"out": "dist/scrollbuilder.js",
+				"optimize": "none",
+				"optimizeCss": "none",
+				"normalizeDirDefines": "all",
+				"wrap": true,
+				"paths": {
+					"almond": "../bower_components/almond/almond",
+					"backbone": "empty:",
+					"scrollbuilder-i18n": "i18n/i18n",
+					"scrollbuilder-logic": "scrollbuilder-logic",
+					"scrollbuilder": "scrollbuilder-plugin",
+					"fuelux": "empty:",
+					"jquery": "empty:",
+					"text": "../bower_components/requirejs-text/text",
+					"underscore": "empty:"
+				},
+				"exclude": ["jquery", "text", "backbone", "underscore"],
+				"shim": {},
+				"stubModules": ["text"]
+			}
+		}
+	},
+	"uglify": {
+		"all": {
+			"options": {
+				"sourceMap": true,
+				"preserveComments": false
+			},
+			"files": {
+				"dist/<%= pkg.name %>-amd.min.js": ["dist/<%= pkg.name %>-amd.js"],
+				"dist/<%= pkg.name %>.min.js": ["dist/<%= pkg.name %>.js"]
+			}
+		}
+	},
+	"less": {
+		"build": {
+			"options": {
+				"compress": false,
+				"cleancss": false
+			},
+			"files": {
+				"dist/less/<%= pkg.name %>.less": "src/less/<%= pkg.name %>.less"
+			}
+		},
+		"compile": {
+			"options": {
+				"compress": false,
+				"cleancss": false
+			},
+			"files": {
+				"dist/css/<%= pkg.name %>.css": "src/less/<%= pkg.name %>.less"
+			}
+		},
+		"compilemin": {
+			"options": {
+				"compress": true,
+				"cleancss": true
+			},
+			"files": {
+				"dist/css/<%= pkg.name %>.min.css": "src/less/<%= pkg.name %>.less"
+			}
+		},
+		"compile_dist": {
+			"options": {
+				"compress": false,
+				"cleancss": false
+			},
+			"files": {
+				"dist/css/<%= pkg.name %>-compiled.css": "dist/less/<%= pkg.name %>.less"
+			}
+		},
+		"compile_dist_min": {
+			"options": {
+				"compress": true,
+				"cleancss": true
+			},
+			"files": {
+				"dist/css/<%= pkg.name %>-compiled.min.css": "dist/less/<%= pkg.name %>.less"
+			}
+		}
+	},
+	"clean": {
+		"prebuild": ["dist/**"],
+		"build": ["dist/build.txt"]
+	},
+	"compress": {
+		"zip": {
+			"options": {
+				"mode": "zip",
+				"archive": "dist/<%= pkg.name %>-<%= pkg.version %>.zip"
+			},
+			"files": [{
+				"expand": true,
+				"cwd": "dist/",
+				"src": ["**"]
+			}]
+		}
+	},
+	"imagemin": {
+		"dynamic": {
+			"files": [{
+				"expand": true,
+				"cwd": "src/img/",
+				"src": ["**/*.{png,jpg,jpeg,gif,png}"],
+				"dest": "dist/img/"
+			}]
+		}
+	},
+	"copy": {
+		"images": {
+			"expand": true,
+			"cwd": "src/img/",
+			"src": ["**", "!**/*.{png,jpg,jpeg,gif,png}"],
+			"dest": "dist/img/"
+		},
+		"less": {
+			"expand": true,
+			"cwd": "src/less/",
+			"src": ["*"],
+			"dest": "dist/less/"
+		}
+	},
+	"watch": {
+		"src": {
+			"options": {
+				"livereload": true
+			},
+			"files": ["src/**/*.js", "src/templates/*.html"],
+			"tasks": ["watch-src"]
+		},
+		"imgmin": {
+			"options": {
+				"livereload": true
+			},
+			"files": ["src/img/*.{png,jpg,jpeg,gif,png}"],
+			"tasks": ["imagemin"]
+		},
+		"img": {
+			"options": {
+				"livereload": true
+			},
+			"files": ["!src/img/*.{png,jpg,jpeg,gif,png}"],
+			"tasks": ["copy:images"]
+		},
+		"css": {
+			"options": {
+				"livereload": true
+			},
+			"files": ["src/less/*.less"],
+			"tasks": ["fullcss", "copy:less"]
+		},
+		"tests": {
+			"options": {
+				"livereload": true
+			},
+			"files": ["test/*"]
+		}
+	},
+	"complexity": {
+		"generic": {
+			"src": ["src/*.js"],
+			"options": {
+				"breakOnErrors": true,
+				"errorsOnly": false,
+				"cyclomatic": 10,
+				"halstead": 20,
+				"maintainability": 100
+			}
+		}
+	},
+	"filenames": {
+		"imageformats": {
+			"options": {
+				"valid": "\\.(gif|jpg|jpeg|png)$",
+				"error": "{filename} only jpg, png, or gif are supported"
+			},
+			"src": ["src/img/**/*"]
+		},
+		"imagenames": {
+			"options": {
+				"valid": "^<%= pkg.name %>-",
+				"error": "{filename} needs to be namespaced with \"<%= pkg.name %>-\""
+			},
+			"src": ["src/img/**/*"]
+		}
+	},
+	"regex-replace": {
+		"plugin-replace": {
+			"src": ["dist/<%= pkg.name %>-amd.js"],
+			"actions": [{
+				"search": "text!",
+				"replace": "text-",
+				"flags": "g"
+			}]
+		}
+	},
+	"express": {
+		"server": {
+			"options": {
+				"port": 3000,
+				"server": "./app.js"
+			}
+		}
+	},
+	"bump": {
+		"options": {
+			"files": ["package.json", "bower.json"],
+			"commit": false,
+			"commitMessage": "%VERSION%",
+			"commitFiles": ["package.json", "bower.json"],
+			"createTag": false,
+			"tagName": "%VERSION%",
+			"tagMessage": "%VERSION%",
+			"push": false,
+			"pushTo": "upstream"
+		}
+	},
+	"file_append": {
+		"default_options": {
+			"files": [
+				{
+					"prepend": "/**\n * Begin wiredep injection of <%= pkg.name %> dependencies\n * (imports bower dependency *AND* sub-dependency LESS files, excluding FuelUX)\n**/\n// bower:less\n// endbower\n/* End wiredep injection of <%= pkg.name %> dependencies */\n\n",
+					"input": "src/less/<%= pkg.name %>.less",
+					"output": "dist/less/<%= pkg.name %>.less"
+				}
+			]
+		}
+	},
+	"wiredep": {
+		"target": {
+			"src": [
+				"dist/less/<%= pkg.name %>.less"
+			],
+			"ignorePath": "../..",
+			"exclude": ["bower_components/bootstrap/", "bower_components/fuelux/", "bower_components/fuelux-2.5/", "bower_components/fusion-fuel/"]
+		}
+	}
+}

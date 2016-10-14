@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Scroll Builder Example Page</title>
+	<link href="dist/css/scrollbuilder-compiled.css" rel="stylesheet" type="text/css" />
+	<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+	<style>
+		body{
+			padding:10px 15px;
+		}
+
+		.demo-button-wrap{
+			margin:50px 0 0 0;
+			padding:20px 0 0 0;
+			border-top:1px dotted #ccc;
+		}
+
+		.demo-button-wrap .btn{
+			margin-top:5px !important;
+		}
+
+		.demo-button-group{
+			margin-bottom:10px;
+		}
+	</style>
+</head>
+<body>
+	<div id="fixture"></div>
+	<div class="demo-button-wrap">
+		<div class="demo-button-group">
+			<button id="btnDestroy" class="btn">Destroy</button>
+			<button id="btnCreate" class="btn">Create</button>
+			<button id="btnDisable" class="btn">Disable</button>
+			<button id="btnEnable" class="btn">Enable</button>
+		</div>
+	</div>
+	<script src="bower_components/requirejs/require.js"></script>
+
+	<script>
+		(function () {
+			require.config({
+				baseUrl: './src',
+				paths: {
+					'backbone': '../bower_components/backbone/backbone',
+					'bootstrap': '../bower_components/bootstrap/dist/js/bootstrap',
+					'scrollbuilder': 'scrollbuilder-plugin',
+					'jquery': '../bower_components/jquery/dist/jquery',
+					'text': '../bower_components/requirejs-text/text',
+					'underscore': '../bower_components/underscore/underscore'
+				},
+				shim: {
+					backbone: { deps: ['jquery', 'underscore'], exports: 'Backbone' },
+					fuelux: { deps: ['jquery'] }
+				}
+			});
+		})();
+	</script>
+	<script>
+		require(['jquery', 'scrollbuilder'], function($) {
+
+			function createScrollBuilder () {
+				$('#fixture').scrollbuilder({
+					certificates: [/*{
+						name: 'Shadowsong (Oathbow)',
+						adventure: 'DDEX 3-07: Herald of the Moon',
+						rarity: 'Weapon (longbow), very rare',
+						attunement: 'ranger',
+						description: 'When making a ranged attack with this weapon, you can declare the target to be your sworn enemy until it dies or until dawn seven days later. You can only have on sworn enemy at a time. When your sworn enemy dies you can choose another one after the next dawn.<br><br>When you make a ranged attack roll against your sworn enemy, you have advantage on the roll. In addition your target gains no benefit from cover except total cover. You suffer no disadvantage due to long range. When you hit your sworn enemy you deal an additional 3d6 piercing damage. While your sworn enemy lives you have disadvantage on attack rolls with all other weapons.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: 'Ioun Stone of Protection',
+						adventure: 'DDEX 1-10: Tyranny in Phlan',
+						rarity: 'Wondrous item, rare',
+						attunement: true,
+						description: 'You gain +1 bonus to AC while this dusty rose prism orbits your head.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: 'Staff of Swarming Insects',
+						adventure: 'DDEX 3-03: Occupation of Szith Morcane',
+						rarity: 'Staff, rare',
+						attunement: 'bard, cleric, druid, sorcerer, warlock, or wizard',
+						description: 'This staff has 10 charges and regains 1d6+4 expended charges daily at dawn. If you expend the last charge, roll a d20. On a 1, a swarm of insects consumes and destroys the staff, then disperses.<br><b><i>Spells.</i></b> Using your spell save DC you can cast <i>giant insect</i> (4 charges) or <i>insect plague</i> (5 charges).<br><b><i>Insect Cloud.</i></b> While holding the staff, you can use an action and expend 1 charge to cause a swarm of harmless flying insects to spread out in a 30-foot radius from you. They remain for 10 minutes, making the area heavily obscured for creatures other than you. A 10 mile/hour wind will dispurse the swarm.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, */{
+						name: 'Bracers of Defense',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Wondrous item, rare',
+						attunement: true,
+						description: 'While wearing these bracers, you gain a +2 bonus to AC if you are wearing no armor and using no shield.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: 'Staff of Fire',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Staff, very rare',
+						attunement: 'druid, sorcerer, warlock, or wizard',
+						description: 'You have resistance to fire damage while holding this staff. The staff has 10 charges. While holding it, you can use your action to cast one of the following spell using your spell save DC: <i>burning hands</i> (1 charge), <i>fireball</i> (3 charges), or <i>wall of fire</i> (4 charges)<br>The staff regains 1d6+4 charges daily at dawn. If you expend the last charge, roll a d20. On a 1, the staff blackens, crumbles into cinders, and is destroyed.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: 'Black Dragon Mask',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Wondrous item, legendary',
+						attunement: true,
+						description: 'This horned mask of glossy ebony has horns and a skull-like mien. While wearing it you gain the following properties.<br><b><i>Damage Absorption</i></b> You have damage resistance to acid, if already resistant you have immunity, if already immune you heal half the acid damage. <b><i>Draconic Majesty</i></b> If wearing no armor, you can add you charisma modifier to your AC. <b><i>Dragon Breath</i></b> If you have a breath weapon that requires rest to recharge, it gain a recharge of 6. <b><i>Dragon Sight</i></b> You gain darkvision for an additional 60 feet, once per day, you gain blindsight out to 30 feet for 5 minutes. <b><i>Dragon Tongue</i></b> Speak and understand draconic, advantage on any Charisma check against black dragons. <b><i>Legendary Resistance (1/day)</i></b> If you fail a saving throw, you can choose to succeed instead. <b><i>Water Breathing</i></b> You can breath underwater.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: 'Hazirawn',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Weapon (greatsword), legendary',
+						attunement: true,
+						description: 'A sentient (neutral evil) greatsword, <i>Hazirawn</i> is capable of speech in Common and Netherese. If not attuned you gain a +1 bonus to attack and damage rolls made with this weapon and deal an extra 1d6 necrotic damage. When you are attuned the attach and damage bonus is +2 and you deal 2d6 necrotic damage.<br><b><i>Spells</i></b>While attuned, you have 4 charges to cast spells. <i>detect magic</i> (1 charge), <i>detect evil and good</i> (1 charge), or <i>detect thoughts</i> (2 charges). Each night at midnight, regain 1d4 expended charges.<br><b><i>Wounding</i></b> While attuned, any creature you hit with <i>Hazirawn</i> can not regain hit point for 1 minute. Target can make a DC 15 Constitution saving throw to end this effect at the end of each of its turns.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: 'Insignia of Claws',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Wondrous item, uncommon',
+						attunement: false,
+						description: 'While wearing the insignia, you gain a +1 bonus to the attack rolls and damage rolls you make with unarmed strikes and natural weapons. Such attacks are considered to be magical.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: 'Bag of Holding',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Wondrous item, uncommon',
+						attunement: false,
+						description: 'This bag has an interior space considerable larger than its outside dimensions, roughly 2 feet in diameter at the mouth and 4 feet deep. The bag can hold up to 500 pounds, not exceeding a volumne of 64 cubic feet. The bag weighs 15 pounds, regardless of its contents. Retrieving an item from the bag requires an action. More info in <b><i>DMG 153</i></b>.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: '+1 longsword',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Weapon (longsword), uncommon',
+						attunement: false,
+						description: 'You have a +1 bonus to attack and damage rolls made with this magic weapon.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: '+1 longbow',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Weapon (longbow), uncommon',
+						attunement: false,
+						description: 'You have a +1 bonus to attack and damage rolls made with this magic weapon.',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}, {
+						name: '+1 leather armor',
+						adventure: 'Hoard of the Dragon Queen: Ep 8 Castle in the Clouds',
+						rarity: 'Armor (leather), rare',
+						attunement: false,
+						description: 'You have a +1 bonus to AC while wearing this armor',
+						dmdci: '2141-024-377',
+						dmname: 'Dominic Reitman'
+					}]
+				});
+			}
+
+			createScrollBuilder();
+
+			//See disable/enable/destroy methods in 'src/contentmodal-logic.js'
+			$('#btnDisable').on('click', function(){
+				//contentmodal.disable();
+			});
+
+			$('#btnEnable').on('click', function(){
+				//contentmodal.disable();
+			});
+
+			$('#btnDestroy').on('click', function(){
+				//contentmodal.disable();
+			});
+
+			$('#btnCreate').on('click', function(){
+				createScrollBuilder();
+			});
+		});
+	</script>
+	<!--script src="//localhost:35729/livereload.js"></script-->
+</body>
+</html>
